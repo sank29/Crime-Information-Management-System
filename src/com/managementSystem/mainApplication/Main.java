@@ -1,7 +1,10 @@
 package com.managementSystem.mainApplication;
 
+import java.util.List;
 import java.util.Scanner;
 
+import com.managementSystem.bean.PoliceStationBean;
+import com.managementSystem.usecases.ListAllPoliceStationsCase;
 import com.managementSystem.usecases.LoginPoliceOfficerCase;
 
 public class Main {
@@ -35,6 +38,8 @@ public class Main {
 	
 	
 	
+	
+	
 	// Calling the method section
 	
 	public static boolean loginValidation(String username, String password,String officerName,int officerId) {
@@ -43,10 +48,37 @@ public class Main {
 		return loginPoliceOfficerCase.loginPoliceOfficer(username, password, officerName, officerId);
 	}
 	
+	public static void ListingAllThePoliceStation() {
+		ListAllPoliceStationsCase listAllPoliceStationsCase = new ListAllPoliceStationsCase();
+		printAllThePoliceStaion(listAllPoliceStationsCase.ListAllPoliceStationsInYourArea());
+		
+
+	}
+	
+	// Printing the result section
+	
+	public static void printAllThePoliceStaion(List<PoliceStationBean> listPoliceStationBeans) {
+		if(listPoliceStationBeans == null) {
+			System.out.println("No Police station found in your area");
+		}else {
+			System.out.println("Below all the police stations near you");
+			System.out.println("=====================================");
+			for(int i=0; i<=listPoliceStationBeans.size()-1; i++) {
+				PoliceStationBean policeStationBean = listPoliceStationBeans.get(i);
+				System.out.println("Police Station Number is " + policeStationBean.getPoliceStationNo());
+				System.out.println("Police area is " + policeStationBean.getPoliceArea());
+				System.out.println("Police station detail address " + policeStationBean.getPoliceStationAddress());
+				System.out.println("=====================================");
+			}
+		}
+		
+	}
+
 
 	public static void main(String[] args) {
 		System.out.println("Welcome in Crime Infomation Management System");
 		takeInputFromUserForLogin();
+		ListingAllThePoliceStation();
 	}
 
 }
