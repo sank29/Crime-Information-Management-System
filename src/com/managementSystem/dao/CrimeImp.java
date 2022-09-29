@@ -3,8 +3,11 @@ package com.managementSystem.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.managementSystem.bean.PoliceOfficerBean;
+import com.managementSystem.bean.PoliceStationBean;
 import com.managementSystem.exception.MySqlExceptions;
 import com.managementSystem.utility.DataBaseUtility;
 
@@ -43,4 +46,65 @@ public class CrimeImp implements CrimeDao {
 		
 	}
 
+	@Override
+	public List<PoliceStationBean> listAllThePoliceStation() {
+		
+		List<PoliceStationBean> policeStationList = new ArrayList<>();
+		
+		try(Connection connection = DataBaseUtility.GetConnection()){
+		
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from policestation");
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				int policeStationNumber = resultSet.getInt("policeStationNo");
+				String policeStationArea = resultSet.getString("policeStationArea");
+				String policeStationAddress = resultSet.getString("policeStationAddress");
+				
+				
+				PoliceStationBean policeStationBean = new PoliceStationBean(policeStationNumber, policeStationArea, policeStationAddress);
+				policeStationList.add(policeStationBean);
+			}
+			
+			
+		}catch(Exception exception){
+			System.out.println(exception.getMessage());
+		}
+		
+		return policeStationList;
+		
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
