@@ -6,6 +6,7 @@ import java.util.Scanner;
 import com.managementSystem.bean.PoliceStationBean;
 import com.managementSystem.usecases.ListAllPoliceStationsCase;
 import com.managementSystem.usecases.LoginPoliceOfficerCase;
+import com.managementSystem.usecases.RegisteringTheCase;
 
 public class Main {
 	public static Scanner sc = new Scanner(System.in);
@@ -36,9 +37,38 @@ public class Main {
 		return loginValidation(username, password,officerName, officerId);
 	}
 	
-	
-	
-	
+	public static boolean takeInputFromUserForRegisteringTheCase() {
+		
+		
+		
+		System.out.println("Please enter crime Id");
+		int crimeId = sc.nextInt();
+		
+		System.out.println("Please enter date when crime happen");
+		String date = sc.next();
+		
+		System.out.println("Please enter crime description");
+		sc.nextLine();
+		String crimeDescription = sc.nextLine();
+		
+		System.out.println("Please enter crime victims");
+		sc.nextLine();
+		String crimeVictims = sc.nextLine();
+		
+		System.out.println("Please enter crime details description");
+		String crimeDetailsDescription = sc.nextLine();
+		
+		System.out.println("Please enter crime main suspect");
+		String crimeMainSuspect = sc.nextLine();
+		
+		System.out.println("Please enter crime under which police station. Enter police station id");
+		int crimeUnderWhichPoliceStationId = sc.nextInt();
+		
+		
+		return registeringTheCase(crimeId, date, crimeDescription, crimeVictims,
+				crimeDetailsDescription, crimeMainSuspect, crimeUnderWhichPoliceStationId);
+		
+	}
 	
 	// Calling the method section
 	
@@ -55,9 +85,18 @@ public class Main {
 
 	}
 	
+	public static boolean registeringTheCase(int crimeid, String date, String crimeDescription,String crimeVictims,
+			String crimeDetailsDescription, String crimeMainSuspect, int crimeUnderWhichPoliceStationId) {
+		
+		RegisteringTheCase registeringTheCase = new RegisteringTheCase();
+		
+		return registeringTheCase.registeringTheCase(crimeid, date, crimeDescription, crimeVictims, crimeDetailsDescription, crimeMainSuspect, crimeUnderWhichPoliceStationId);
+	}
+	
 	// Printing the result section
 	
 	public static void printAllThePoliceStaion(List<PoliceStationBean> listPoliceStationBeans) {
+		
 		if(listPoliceStationBeans == null) {
 			System.out.println("No Police station found in your area");
 			
@@ -80,9 +119,12 @@ public class Main {
 
 
 	public static void main(String[] args) {
+		
 		System.out.println("Welcome in Crime Infomation Management System");
 		takeInputFromUserForLogin();
 		ListingAllThePoliceStation();
+		System.out.println(takeInputFromUserForRegisteringTheCase());;
+		
 	}
 
 }

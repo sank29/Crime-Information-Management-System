@@ -75,6 +75,59 @@ public class CrimeImp implements CrimeDao {
 		return policeStationList;
 		
 	}
+	
+//	 crimeId                        | int           | NO   | PRI | NULL    |       |                                       
+//	 | crimeDate                      
+//	 | date          | YES  |     | NULL    |       |                                       
+//	 | crimeDescription               | varchar(200)  | YES  |     | NULL    |       |                                       
+//	 | crimeVictims                   | varchar(200)  | YES  |     | NULL    |       |                                       
+//	 | crimeDetailsDescription        | varchar(1000) | YES  |     | NULL    |       |                                       
+//	 | crimeUnderWhichPoliceStationId | int           | YES  |     | NULL    |       |                                       
+//	 | crimeMainSuspect         
+
+	@Override
+	public Boolean registeringTheCase(int crimeId, String date, String crimeDescription, String crimeVictims,
+			String crimeDetailsDescription, String crimeMainSuspect, int crimeUnderWhichPoliceStationId) {
+		
+		try(Connection connection = DataBaseUtility.GetConnection()) {
+			
+			PreparedStatement preparedStatement = connection.prepareStatement("insert into crimeinformation values "
+					
+					+ "(?,"
+					+ "?,"
+					+ "?,"
+					+ "?,"
+					+ "?,"
+					+ "?,"
+					+ "?)"
+					);
+			
+			preparedStatement.setInt(1, crimeId);
+			preparedStatement.setString(2, date);
+			preparedStatement.setString(3, crimeDescription);
+			preparedStatement.setString(4, crimeVictims);
+			preparedStatement.setString(5, crimeDetailsDescription);
+			preparedStatement.setString(6, crimeMainSuspect);
+			preparedStatement.setInt(7, crimeUnderWhichPoliceStationId);
+			
+			int result = preparedStatement.executeUpdate();
+			
+			if(result > 0) {
+				
+				System.out.println("Crime record update sucessfully");
+				return true;
+			}else {
+				System.out.println("Crime record not inserted");
+			}
+			
+			
+		} catch (Exception e) {
+			
+			System.out.println(e.getMessage());
+		}
+		
+		return false;
+	}
 
 }
 
