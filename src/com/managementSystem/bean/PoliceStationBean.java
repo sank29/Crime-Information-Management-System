@@ -1,6 +1,7 @@
 package com.managementSystem.bean;
 
 public class PoliceStationBean {
+	
 	private int policeStationNo;
 	private String policeArea;
 	private String policeStationAddress;

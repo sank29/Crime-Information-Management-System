@@ -49,6 +49,7 @@ public class Main {
 	}
 	
 	public static void ListingAllThePoliceStation() {
+		
 		ListAllPoliceStationsCase listAllPoliceStationsCase = new ListAllPoliceStationsCase();
 		printAllThePoliceStaion(listAllPoliceStationsCase.ListAllPoliceStationsInYourArea());
 		
@@ -60,15 +61,19 @@ public class Main {
 	public static void printAllThePoliceStaion(List<PoliceStationBean> listPoliceStationBeans) {
 		if(listPoliceStationBeans == null) {
 			System.out.println("No Police station found in your area");
+			
 		}else {
+			
 			System.out.println("Below all the police stations near you");
 			System.out.println("=====================================");
 			for(int i=0; i<=listPoliceStationBeans.size()-1; i++) {
+				
 				PoliceStationBean policeStationBean = listPoliceStationBeans.get(i);
 				System.out.println("Police Station Number is " + policeStationBean.getPoliceStationNo());
 				System.out.println("Police area is " + policeStationBean.getPoliceArea());
 				System.out.println("Police station detail address " + policeStationBean.getPoliceStationAddress());
 				System.out.println("=====================================");
+				
 			}
 		}
 		
