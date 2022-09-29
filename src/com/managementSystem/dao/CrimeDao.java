@@ -9,6 +9,6 @@ public interface CrimeDao {
 	
 	public PoliceOfficerBean loginPolicOfficer(String username, String password, String officerName, int officerId);
 	public List<PoliceStationBean> listAllThePoliceStation();
-
+	public Boolean registeringTheCase();
 	
 }

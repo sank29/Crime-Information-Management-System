@@ -35,6 +35,5 @@ public class PoliceStationBean {
 	public void setPoliceStationAddress(String policeStationAddress) {
 		this.policeStationAddress = policeStationAddress;
 	}
-	
-	
+
 }
