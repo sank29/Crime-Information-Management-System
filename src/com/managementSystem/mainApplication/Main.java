@@ -52,7 +52,6 @@ public class Main {
 		
 		ListAllPoliceStationsCase listAllPoliceStationsCase = new ListAllPoliceStationsCase();
 		printAllThePoliceStaion(listAllPoliceStationsCase.ListAllPoliceStationsInYourArea());
-		
 
 	}
 	
