@@ -125,9 +125,11 @@ public class CrimeImp implements CrimeDao {
 	public CriminalBean criminalRegistrationCase(int criminalId, String criminalName, String criminalAge, String criminalFaceMarks,
 			String criminalFirstArrestLocation, int criminalCrimeId, String criminalGender) {
 		
+		CriminalBean criminalBean = null;
+		
 		try(Connection connection = DataBaseUtility.GetConnection()) {
 			
-			PreparedStatement preparedStatement = connection.prepareStatement("insert into criminallist values(?,?,?,?,?,?)");
+			PreparedStatement preparedStatement = connection.prepareStatement("insert into criminallist values(?,?,?,?,?,?,?)");
 			
 			preparedStatement.setInt(1, criminalId);
 			preparedStatement.setString(2, criminalName);
@@ -137,12 +139,21 @@ public class CrimeImp implements CrimeDao {
 			preparedStatement.setInt(6, criminalCrimeId);
 			preparedStatement.setString(7, criminalGender);
 			
-			 preparedStatement.executeUpdate();
+			int x = preparedStatement.executeUpdate();
+			
+			if(x > 0) {
+				criminalBean = new CriminalBean(criminalId, criminalName, criminalAge, criminalFaceMarks, criminalFirstArrestLocation, criminalCrimeId, criminalGender);
+				System.out.println("Criminal Recorde registering done!");;
+				
+			}else {
+				System.out.println("Criminal not inseted into database");
+			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
+			System.out.println(e.getMessage());
 		}
-		return null;
+		return criminalBean;
 	}
 
 }
