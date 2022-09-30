@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.managementSystem.bean.CriminalBean;
 import com.managementSystem.bean.PoliceOfficerBean;
 import com.managementSystem.bean.PoliceStationBean;
 import com.managementSystem.exception.MySqlExceptions;
@@ -76,15 +77,6 @@ public class CrimeImp implements CrimeDao {
 		
 	}
 	
-//	 crimeId                        | int           | NO   | PRI | NULL    |       |                                       
-//	 | crimeDate                      
-//	 | date          | YES  |     | NULL    |       |                                       
-//	 | crimeDescription               | varchar(200)  | YES  |     | NULL    |       |                                       
-//	 | crimeVictims                   | varchar(200)  | YES  |     | NULL    |       |                                       
-//	 | crimeDetailsDescription        | varchar(1000) | YES  |     | NULL    |       |                                       
-//	 | crimeUnderWhichPoliceStationId | int           | YES  |     | NULL    |       |                                       
-//	 | crimeMainSuspect         
-
 	@Override
 	public Boolean registeringTheCase(int crimeId, String date, String crimeDescription, String crimeVictims,
 			String crimeDetailsDescription, String crimeMainSuspect, int crimeUnderWhichPoliceStationId) {
@@ -127,6 +119,30 @@ public class CrimeImp implements CrimeDao {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public CriminalBean criminalRegistrationCase(int criminalId, String criminalName, String criminalAge, String criminalFaceMarks,
+			String criminalFirstArrestLocation, int criminalCrimeId, String criminalGender) {
+		
+		try(Connection connection = DataBaseUtility.GetConnection()) {
+			
+			PreparedStatement preparedStatement = connection.prepareStatement("insert into criminallist values(?,?,?,?,?,?)");
+			
+			preparedStatement.setInt(1, criminalId);
+			preparedStatement.setString(2, criminalName);
+			preparedStatement.setString(3, criminalAge);
+			preparedStatement.setString(4, criminalFaceMarks);
+			preparedStatement.setString(5,criminalFirstArrestLocation);
+			preparedStatement.setInt(6, criminalCrimeId);
+			preparedStatement.setString(7, criminalGender);
+			
+			 preparedStatement.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return null;
 	}
 
 }

@@ -9,6 +9,7 @@ import com.managementSystem.usecases.LoginPoliceOfficerCase;
 import com.managementSystem.usecases.RegisteringTheCase;
 
 public class Main {
+	
 	public static Scanner sc = new Scanner(System.in);
 	
 	// Crime information management System menu
@@ -52,7 +53,6 @@ public class Main {
 		String crimeDescription = sc.nextLine();
 		
 		System.out.println("Please enter crime victims");
-		sc.nextLine();
 		String crimeVictims = sc.nextLine();
 		
 		System.out.println("Please enter crime details description");
@@ -123,7 +123,7 @@ public class Main {
 		System.out.println("Welcome in Crime Infomation Management System");
 		takeInputFromUserForLogin();
 		ListingAllThePoliceStation();
-		System.out.println(takeInputFromUserForRegisteringTheCase());;
+		takeInputFromUserForRegisteringTheCase();
 		
 	}
 
