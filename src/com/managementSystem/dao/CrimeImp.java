@@ -3,9 +3,11 @@ package com.managementSystem.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.managementSystem.bean.CrimeInformationBean;
 import com.managementSystem.bean.CriminalBean;
 import com.managementSystem.bean.PoliceOfficerBean;
 import com.managementSystem.bean.PoliceStationBean;
@@ -83,7 +85,7 @@ public class CrimeImp implements CrimeDao {
 		
 		try(Connection connection = DataBaseUtility.GetConnection()) {
 			
-			PreparedStatement preparedStatement = connection.prepareStatement("insert into crimeinformation values "
+			PreparedStatement preparedStatement = connection.prepareStatement("insert into crimeinformation(crimeId,crimeDate,crimeDescription,crimeVictims,crimeDetailsDescription,crimeMainSuspecte,crimeUnderWhichPoliceStationId) values "
 					
 					+ "(?,"
 					+ "?,"
@@ -156,6 +158,221 @@ public class CrimeImp implements CrimeDao {
 		return criminalBean;
 	}
 
+	@Override
+	public List<CriminalBean> listAllTheCriminalRecord() {
+		
+		List<CriminalBean>listCriminalBeans = new ArrayList<>();
+		
+		try(Connection connection = DataBaseUtility.GetConnection()) {
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from criminallist");
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				int criminalId = resultSet.getInt("criminalId");
+				String criminalName = resultSet.getString("criminalName");
+				String criminalAge = resultSet.getString("criminalAge");
+				String criminalFaceMarks = resultSet.getString("criminalFaceMarks");
+				String criminalFirstArrestLocation = resultSet.getString("criminalFirstArrestLocation");
+				int criminalCrimeId = resultSet.getInt("criminalCrimeId");
+				String criminalGender = resultSet.getString("criminalGender");
+				
+				
+				CriminalBean policeStationBean = new CriminalBean(criminalId, criminalName, criminalAge, criminalFaceMarks, criminalFirstArrestLocation, criminalCrimeId, criminalGender);
+				listCriminalBeans.add(policeStationBean);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return listCriminalBeans;
+	}
+	
+//	+--------------------------------+---------------+------+-----+---------+-------+                                                                                             
+//	| Field                          | Type          | Null | Key | Default | Extra |                                                                                             
+//	+--------------------------------+---------------+------+-----+---------+-------+                                                                                             
+//	| crimeId                        | int           | NO   | PRI | NULL    |       |                                                                                             
+//	| crimeDate                      | date          | YES  |     | NULL    |       |                                                                                             
+//	| crimeDescription               | varchar(200)  | YES  |     | NULL    |       |                                                                                             
+//	| crimeVictims                   | varchar(200)  | YES  |     | NULL    |       |                                                                                             
+//	| crimeDetailsDescription        | varchar(1000) | YES  |     | NULL    |       |                                                                                             
+//	| crimeMainSuspecte              | varchar(100)  | YES  |     | NULL    |       |                                                                                             
+//	| crimeUnderWhichPoliceStationId | int           | YES  | MUL | NULL    |       |                                                                                             
+//	| crimeStatus                    | int           | YES  |     | 500     |       |                                                                                             
+//	+--------------------------------+---------------+------+-----+---------+-------+ 
+	
+	@Override
+	public List<CrimeInformationBean> displayAllCriminalRecordPoliceStaionWise(int policeStationId) {
+		
+		List<CrimeInformationBean>listCriminalRecord = new ArrayList<>();
+		
+		try(Connection connection = DataBaseUtility.GetConnection()) {
+			
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from crimeinformation where crimeUnderWhichPoliceStationId = ?");
+			preparedStatement.setInt(1, policeStationId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				int crimeId = resultSet.getInt("crimeId");
+				String crimeDate = resultSet.getString("crimeDate");
+				String crimeDescription = resultSet.getString("crimeDescription");
+				String crimeVictims = resultSet.getString("crimeVictims");
+				String crimeDetailsDescription = resultSet.getString("crimeDetailsDescription");
+				String crimeMainSuspecte = resultSet.getString("crimeMainSuspecte");
+				int crimeUnderWhichPoliceStationId = resultSet.getInt("crimeUnderWhichPoliceStationId");
+				int crimeStatus = resultSet.getInt("crimeStatus");
+				
+				CrimeInformationBean crimeInformationBean= new CrimeInformationBean(crimeId, crimeDate, crimeDescription, crimeVictims, crimeDetailsDescription,
+						crimeMainSuspecte, crimeUnderWhichPoliceStationId, crimeStatus);
+				
+				listCriminalRecord.add(crimeInformationBean);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+		}
+		
+		return listCriminalRecord;
+	}
+
+	@Override
+	public List<CrimeInformationBean> numberOfSolvedAndUnsolvedCrime(int userChoice) {
+		
+		int crimeCode = 400;
+		
+		if(userChoice == 2) {
+			crimeCode = 500;
+		}
+		
+		List<CrimeInformationBean> listOfcrimeInformationBean = new ArrayList<>();
+		
+		try(Connection connection = DataBaseUtility.GetConnection()){
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from crimeInformation where crimeStatus = ?");
+			preparedStatement.setInt(1, crimeCode);
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				int crimeId = resultSet.getInt("crimeId");
+				String crimeDate = resultSet.getString("crimeDate");
+				String crimeDescription = resultSet.getString("crimeDescription");
+				String crimeVictims = resultSet.getString("crimeVictims");
+				String crimeDetailsDescription = resultSet.getString("crimeDetailsDescription");
+				String crimeMainSuspecte = resultSet.getString("crimeMainSuspecte");
+				int crimeUnderWhichPoliceStationId = resultSet.getInt("crimeUnderWhichPoliceStationId");
+				int crimeStatus = resultSet.getInt("crimeStatus");
+				
+				CrimeInformationBean crimeInformationBean = new CrimeInformationBean(crimeId, crimeDate, crimeDescription, crimeVictims, crimeDetailsDescription, crimeMainSuspecte, crimeUnderWhichPoliceStationId,crimeStatus);
+				listOfcrimeInformationBean.add(crimeInformationBean);
+			}
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return listOfcrimeInformationBean;
+	}
+
+	@Override
+	public List<CrimeInformationBean> numberOfCrimeInformationBasedOnMonth() {
+		
+		List<String>mothsArray = dateGenerator();
+		
+        List<CrimeInformationBean> listOfcrimeInformationBean = new ArrayList<>();
+		
+		try(Connection connection = DataBaseUtility.GetConnection()){
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from crimeInformation where crimeDate BETWEEN ? AND ?");
+			preparedStatement.setString(1, mothsArray.get(0));
+			preparedStatement.setString(2, mothsArray.get(1));
+			
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				
+				int crimeId = resultSet.getInt("crimeId");
+				String crimeDate = resultSet.getString("crimeDate");
+				String crimeDescription = resultSet.getString("crimeDescription");
+				String crimeVictims = resultSet.getString("crimeVictims");
+				String crimeDetailsDescription = resultSet.getString("crimeDetailsDescription");
+				String crimeMainSuspecte = resultSet.getString("crimeMainSuspecte");
+				int crimeUnderWhichPoliceStationId = resultSet.getInt("crimeUnderWhichPoliceStationId");
+				int crimeStatus = resultSet.getInt("crimeStatus");
+				
+				CrimeInformationBean crimeInformationBean = new CrimeInformationBean(crimeId, crimeDate, crimeDescription, crimeVictims, crimeDetailsDescription, crimeMainSuspecte, crimeUnderWhichPoliceStationId,crimeStatus);
+				listOfcrimeInformationBean.add(crimeInformationBean);
+			}
+			
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return listOfcrimeInformationBean;
+		
+	}
+	
+	@Override
+	public boolean changeCrimeStatus(int crimeId) {
+		
+		try(Connection connection = DataBaseUtility.GetConnection()){
+			
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from crimeinformation where crimeId = ?");
+			preparedStatement.setInt(1, crimeId);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			int databaseCrimeId = resultSet.getInt("crimeStatus");
+			if(databaseCrimeId == 400) {
+				
+				System.out.println("Case already solved");
+				
+			}else {
+				
+				PreparedStatement preparedStatement2 = connection.prepareStatement("update crimeinformation set crimeStatus = 400 where crimeId = ?");
+				preparedStatement2.setInt(1, crimeId);
+				int result = preparedStatement2.executeUpdate();
+				
+				if(result > 0) {
+					return true;
+				}
+			}
+
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
+		return false;
+	}
+
+	public static List<String> dateGenerator() {
+		
+		List<String>arrayListOfDates = new ArrayList<>();
+		
+		LocalDate date= LocalDate.now();
+		int months = date.getMonthValue();
+		int year = date.getYear();
+		int currentDate = date.getDayOfMonth();
+		int pastDate = 1;
+		
+		String currentDateString = year + "-" + months + "-" + currentDate;
+		String pastDateString = year + "-" + months + "-" + pastDate;
+		
+		arrayListOfDates.add(pastDateString);
+		arrayListOfDates.add(currentDateString);
+		
+		return arrayListOfDates;
+		
+	}
+
+	
+
+	
+	
+	
 }
 
 

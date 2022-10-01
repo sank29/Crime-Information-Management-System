@@ -4,6 +4,7 @@ import com.managementSystem.bean.CriminalBean;
 import com.managementSystem.dao.CrimeImp;
 
 public class CriminalRegisteringCase {
+	
 	CrimeImp crimeImp = new CrimeImp();
 	
 	public CriminalBean criminalRegistrationCase(int criminalId, String criminalName, String criminalAge, String criminalFaceMarks,
@@ -19,7 +20,5 @@ public class CriminalRegisteringCase {
 		}
 		
 	}
-	
-	
-	
+
 }
