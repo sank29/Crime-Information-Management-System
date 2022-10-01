@@ -29,4 +29,22 @@ public interface CrimeDao {
 	
 	public List<CrimeInformationBean> displayAllCriminalRecordPoliceStaionWise(int policeStationId);
 	
+	public List<CriminalBean> displayAllCrimePoliceStationWise(int policeStationId); //Ongoing
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

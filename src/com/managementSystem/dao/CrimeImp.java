@@ -190,19 +190,6 @@ public class CrimeImp implements CrimeDao {
 		return listCriminalBeans;
 	}
 	
-//	+--------------------------------+---------------+------+-----+---------+-------+                                                                                             
-//	| Field                          | Type          | Null | Key | Default | Extra |                                                                                             
-//	+--------------------------------+---------------+------+-----+---------+-------+                                                                                             
-//	| crimeId                        | int           | NO   | PRI | NULL    |       |                                                                                             
-//	| crimeDate                      | date          | YES  |     | NULL    |       |                                                                                             
-//	| crimeDescription               | varchar(200)  | YES  |     | NULL    |       |                                                                                             
-//	| crimeVictims                   | varchar(200)  | YES  |     | NULL    |       |                                                                                             
-//	| crimeDetailsDescription        | varchar(1000) | YES  |     | NULL    |       |                                                                                             
-//	| crimeMainSuspecte              | varchar(100)  | YES  |     | NULL    |       |                                                                                             
-//	| crimeUnderWhichPoliceStationId | int           | YES  | MUL | NULL    |       |                                                                                             
-//	| crimeStatus                    | int           | YES  |     | 500     |       |                                                                                             
-//	+--------------------------------+---------------+------+-----+---------+-------+ 
-	
 	@Override
 	public List<CrimeInformationBean> displayAllCriminalRecordPoliceStaionWise(int policeStationId) {
 		
@@ -269,7 +256,9 @@ public class CrimeImp implements CrimeDao {
 				
 				CrimeInformationBean crimeInformationBean = new CrimeInformationBean(crimeId, crimeDate, crimeDescription, crimeVictims, crimeDetailsDescription, crimeMainSuspecte, crimeUnderWhichPoliceStationId,crimeStatus);
 				listOfcrimeInformationBean.add(crimeInformationBean);
+				
 			}
+			
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -305,9 +294,11 @@ public class CrimeImp implements CrimeDao {
 				
 				CrimeInformationBean crimeInformationBean = new CrimeInformationBean(crimeId, crimeDate, crimeDescription, crimeVictims, crimeDetailsDescription, crimeMainSuspecte, crimeUnderWhichPoliceStationId,crimeStatus);
 				listOfcrimeInformationBean.add(crimeInformationBean);
+				
 			}
 			
 		}catch (Exception e) {
+			
 			System.out.println(e.getMessage());
 		}
 		
@@ -347,6 +338,54 @@ public class CrimeImp implements CrimeDao {
 		
 		return false;
 	}
+	
+//+---------+------------+------------------+--------------+-------------------------+-------------------+--------------------------------+-------------+------------+-----------------+-------------+-------------------+-----------------------------+-----------------+----------------+                                                                                                                                             
+//| crimeId | crimeDate  | crimeDescription | crimeVictims | crimeDetailsDescription | crimeMainSuspecte | crimeUnderWhichPoliceStationId | crimeStatus | criminalId | criminalName    | criminalAge | criminalFaceMarks | criminalFirstArrestLocation | criminalCrimeId | criminalGender |                                                                                                                                             
+//+---------+------------+------------------+--------------+-------------------------+-------------------+--------------------------------+-------------+------------+-----------------+-------------+-------------------+-----------------------------+-----------------+----------------+                                                                                                                                             
+//|     100 | 1998-09-10 | murder           |              | murder                  | sanket            |                           1000 |        NULL |        500 | sanket wankhede | 1998-08-09  | pimples           | mehkar buldhana             |             100 | male           |                                                                                                                                             
+//+---------+------------+------------------+--------------+-------------------------+-------------------+--------------------------------+-------------+------------+-----------------+-------------+-------------------+-----------------------------+-----------------+----------------+
+	
+	
+	@Override
+	public List<CriminalBean> displayAllCrimePoliceStationWise(int policeStationId) {
+		
+		List<CriminalBean>listCriminalBeans = new ArrayList<>();
+		
+		try(Connection connection = DataBaseUtility.GetConnection()){
+			
+			PreparedStatement preparedStatement = connection.prepareStatement("select * from crimeinformation inner join criminallist on crimeinformation.crimeId = criminallist.criminalCrimeId");
+			
+			ResultSet resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				int crimeUnderWhichPoliceStationId = resultSet.getInt("crimeUnderWhichPoliceStationId");
+				if(crimeUnderWhichPoliceStationId == policeStationId) {
+					
+					int criminalId = resultSet.getInt("criminalId");
+					String criminalName = resultSet.getString("criminalName");
+					String criminalAge = resultSet.getString("criminalAge");
+					String criminalFaceMarks = resultSet.getString("criminalFaceMarks");
+					String criminalFirstArrestLocation = resultSet.getString("criminalFirstArrestLocation");
+					int criminalCrimeId = resultSet.getInt("criminalCrimeId");
+					String criminalGender = resultSet.getString("criminalGender");
+					
+					
+					CriminalBean policeStationBean = new CriminalBean(criminalId, criminalName, criminalAge, criminalFaceMarks, criminalFirstArrestLocation, criminalCrimeId, criminalGender);
+					listCriminalBeans.add(policeStationBean);
+				}
+				
+				
+			}
+			
+			
+			
+		}catch (Exception e) {
+			
+			System.out.println(e.getMessage());
+		}
+		return listCriminalBeans;
+	}
+	
 
 	public static List<String> dateGenerator() {
 		
@@ -367,6 +406,8 @@ public class CrimeImp implements CrimeDao {
 		return arrayListOfDates;
 		
 	}
+
+	
 
 	
 

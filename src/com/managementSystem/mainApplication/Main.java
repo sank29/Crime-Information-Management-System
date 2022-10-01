@@ -8,6 +8,7 @@ import com.managementSystem.bean.CriminalBean;
 import com.managementSystem.bean.PoliceStationBean;
 import com.managementSystem.usecases.CriminalRegisteringCase;
 import com.managementSystem.usecases.DisplayAllCriminalRecordPoliceStaionWiseCase;
+import com.managementSystem.usecases.DisplayAllCriminalsPoliceStationWise;
 import com.managementSystem.usecases.ListAllCrimeInformation;
 import com.managementSystem.usecases.ListAllCriminal;
 import com.managementSystem.usecases.ListAllCurrentMothsCrimeInformation;
@@ -144,6 +145,13 @@ public class Main {
 		
 	}
 	
+	public static List<CriminalBean> takeInputFromUserForDisplayingTheCriminalPoliceStationWise(){
+		System.out.println("Please enter police station id to print all the criminal register there.");
+		int userChoice = sc.nextInt();
+		
+		return displayingTheAllCriminalPoliceStationWise(userChoice);
+	}
+	
 	// Calling the method section
 	
 	public static boolean loginValidation(String username, String password,String officerName,int officerId) {
@@ -206,6 +214,14 @@ public class Main {
 		 DisplayAllCriminalRecordPoliceStaionWiseCase displayAllCriminalRecordPoliceStaionWiseCase = new DisplayAllCriminalRecordPoliceStaionWiseCase();
 			return displayAllCriminalRecordPoliceStaionWiseCase.displayAllCriminalRecordPoliceStationWise(policeStationId);
 	 }
+	 
+	 public static List<CriminalBean> displayingTheAllCriminalPoliceStationWise(int policeStationId){
+		 
+		 DisplayAllCriminalsPoliceStationWise displayAllCriminalsPoliceStationWise = new DisplayAllCriminalsPoliceStationWise();
+	
+		 
+		 return displayAllCriminalsPoliceStationWise.displayAllCriminalsPoliceStationWise(policeStationId);
+	 }
 	
 	
 	// Printing the result section
@@ -234,7 +250,7 @@ public class Main {
 	
 	public static void printAllTheCriminals(List<CriminalBean> listAllCriminal) {
 			
-			if(listAllCriminal == null) {
+		if(listAllCriminal == null) {
 				System.out.println("No Police station found in your area");
 			
 		}else {
@@ -321,19 +337,6 @@ public class Main {
     	}
     }
     
-//	+--------------------------------+---------------+------+-----+---------+-------+                                                                                             
-//	| Field                          | Type          | Null | Key | Default | Extra |                                                                                             
-//	+--------------------------------+---------------+------+-----+---------+-------+                                                                                             
-//	| crimeId                        | int           | NO   | PRI | NULL    |       |                                                                                             
-//	| crimeDate                      | date          | YES  |     | NULL    |       |                                                                                             
-//	| crimeDescription               | varchar(200)  | YES  |     | NULL    |       |                                                                                             
-//	| crimeVictims                   | varchar(200)  | YES  |     | NULL    |       |                                                                                             
-//	| crimeDetailsDescription        | varchar(1000) | YES  |     | NULL    |       |                                                                                             
-//	| crimeMainSuspecte              | varchar(100)  | YES  |     | NULL    |       |                                                                                             
-//	| crimeUnderWhichPoliceStationId | int           | YES  | MUL | NULL    |       |                                                                                             
-//	| crimeStatus                    | int           | YES  |     | 500     |       |                                                                                             
-//	+--------------------------------+---------------+------+-----+---------+-------+ 
-    
     public static void printingTheCrimeInformationPoliceStationWise() {
     	List<CrimeInformationBean> crimeInformationBeans = takeInputFromUserForDisplayingTheCrimeInformationPolicesationWise();
     	
@@ -360,6 +363,36 @@ public class Main {
 		}
     	
     }
+    
+    public static void printingTheCriminalPoliceStationWise() {
+    
+    List<CriminalBean> listAllCriminal = takeInputFromUserForDisplayingTheCriminalPoliceStationWise();
+    	
+	if(listAllCriminal == null) {
+		System.out.println("No criminal found");
+		
+	}else {
+		
+		System.out.println("Below all the criminal found " + listAllCriminal.size());
+		System.out.println("=====================================");
+		
+		for(int i=0; i<=listAllCriminal.size()-1; i++) {
+			
+			CriminalBean criminalBean = listAllCriminal.get(i);
+			
+			System.out.println("Criminal id is " + criminalBean.getCriminalId());
+			System.out.println("Criminal name " + criminalBean.getCriminalName());
+			System.out.println("Criminal age is " + criminalBean.getCriminalAge());
+			System.out.println("Criminal face marks is " + criminalBean.getCriminalFaceMarks());
+			System.out.println("Criminal first arrrest location " + criminalBean.getCriminalFirstArrestLocation());
+			System.out.println("Criminal crime id " + criminalBean.getCriminalId());
+			System.out.println("Criminal gender " + criminalBean.getCriminalGender());
+			
+			System.out.println("=====================================");
+			
+		}
+	}
+    }
 
    
 
@@ -376,8 +409,8 @@ public class Main {
 //		takeInputFromUserFornumberOfSolvedAndUnsolvedCrime();
 //		printAllTheSolvedAndUnsolvedCrimeInformationCurrentMonth();
 //		takeInputFromUserForUpdatingTheCrimeStatus();
-		printingTheCrimeInformationPoliceStationWise();
-		
+//		printingTheCrimeInformationPoliceStationWise();
+		printingTheCriminalPoliceStationWise();
 	}
 
 }
