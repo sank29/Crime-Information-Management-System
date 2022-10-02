@@ -32,7 +32,7 @@ public class CrimeImp implements CrimeDao {
 			if(preparedStatementResult.next()){
 				
 				System.out.println("Login Successful " + officerName);
-				System.out.println("Your are admin now" + officerName);
+				System.out.println("Your are admin now " + officerName);
 				policeOfficerBean = new PoliceOfficerBean(officerName, officerId);
 				return policeOfficerBean;
 				
@@ -327,6 +327,7 @@ public class CrimeImp implements CrimeDao {
 				int result = preparedStatement2.executeUpdate();
 				
 				if(result > 0) {
+					System.out.println("Crime Status Update Successfully. Case has been closed.");
 					return true;
 				}
 			}
@@ -338,12 +339,6 @@ public class CrimeImp implements CrimeDao {
 		
 		return false;
 	}
-	
-//+---------+------------+------------------+--------------+-------------------------+-------------------+--------------------------------+-------------+------------+-----------------+-------------+-------------------+-----------------------------+-----------------+----------------+                                                                                                                                             
-//| crimeId | crimeDate  | crimeDescription | crimeVictims | crimeDetailsDescription | crimeMainSuspecte | crimeUnderWhichPoliceStationId | crimeStatus | criminalId | criminalName    | criminalAge | criminalFaceMarks | criminalFirstArrestLocation | criminalCrimeId | criminalGender |                                                                                                                                             
-//+---------+------------+------------------+--------------+-------------------------+-------------------+--------------------------------+-------------+------------+-----------------+-------------+-------------------+-----------------------------+-----------------+----------------+                                                                                                                                             
-//|     100 | 1998-09-10 | murder           |              | murder                  | sanket            |                           1000 |        NULL |        500 | sanket wankhede | 1998-08-09  | pimples           | mehkar buldhana             |             100 | male           |                                                                                                                                             
-//+---------+------------+------------------+--------------+-------------------------+-------------------+--------------------------------+-------------+------------+-----------------+-------------+-------------------+-----------------------------+-----------------+----------------+
 	
 	
 	@Override
