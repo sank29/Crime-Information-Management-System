@@ -22,11 +22,7 @@ public class Main {
 	
 	public static Scanner sc = new Scanner(System.in);
 	
-	// Crime information management System menu
 	
-	public static void crimeInformationMenu() {
-		System.out.print("1.");
-	}
 	
 	
 	// Input taking section
@@ -46,6 +42,8 @@ public class Main {
 		int officerId = sc.nextInt();
 		
 		return loginValidation(username, password,officerName, officerId);
+		
+		
 		
 	}
 	
@@ -164,7 +162,7 @@ public class Main {
 		
 		ListAllPoliceStationsCase listAllPoliceStationsCase = new ListAllPoliceStationsCase();
 		printAllThePoliceStaion(listAllPoliceStationsCase.ListAllPoliceStationsInYourArea());
-
+		
 	}
 	
 	public static boolean registeringTheCase(int crimeid, String date, String crimeDescription,String crimeVictims,
@@ -235,6 +233,7 @@ public class Main {
 			
 			System.out.println("Below all the police stations near you");
 			System.out.println("=====================================");
+			
 			for(int i=0; i<=listPoliceStationBeans.size()-1; i++) {
 				
 				PoliceStationBean policeStationBean = listPoliceStationBeans.get(i);
@@ -284,6 +283,7 @@ public class Main {
 		if(userChoice == 2)
 			System.out.println("Unsolved cases counted are " + crimeInformationBeans.size());
 		
+		System.out.println("=====================================");
 		for(int i=0; i<=crimeInformationBeans.size()-1; i++) {
 			CrimeInformationBean crimeInformationBean = crimeInformationBeans.get(i);
 			System.out.println("Crime id is " + crimeInformationBean.getCrimeId());
@@ -294,6 +294,7 @@ public class Main {
 			System.out.println("Crime main suspect " + crimeInformationBean.getCrimeMainSuspect());
 			System.out.println("Crime under which police station id " + crimeInformationBean.getCrimeUnderWhichPoliceStationId());
 			System.out.println("Crime status " + crimeInformationBean.getCrimeStatus());
+			System.out.println("=====================================");
 		}
 		
 	}
@@ -309,7 +310,7 @@ public class Main {
 			}else {
 					System.out.println("No of current cases are "  + listInformationBeans.size());
 					
-				
+				System.out.println("=====================================");
 				for(int i=0; i<=listInformationBeans.size()-1; i++) {
 					CrimeInformationBean crimeInformationBean = listInformationBeans.get(i);
 					
@@ -321,6 +322,7 @@ public class Main {
 					System.out.println("Crime main suspect " + crimeInformationBean.getCrimeMainSuspect());
 					System.out.println("Crime under which police station id " + crimeInformationBean.getCrimeUnderWhichPoliceStationId());
 					System.out.println("Crime status " + crimeInformationBean.getCrimeStatus());
+					System.out.println("=====================================");
 				}
 			}
 			
@@ -345,7 +347,7 @@ public class Main {
 		}else {
 				System.out.println("No of current cases are "  + crimeInformationBeans.size());
 				
-			
+			System.out.println("=====================================");
 			for(int i=0; i<=crimeInformationBeans.size()-1; i++) {
 				
 				CrimeInformationBean crimeInformationBean = crimeInformationBeans.get(i);
@@ -358,7 +360,7 @@ public class Main {
 				System.out.println("Crime main suspect " + crimeInformationBean.getCrimeMainSuspect());
 				System.out.println("Crime under which police station id " + crimeInformationBean.getCrimeUnderWhichPoliceStationId());
 				System.out.println("Crime status " + crimeInformationBean.getCrimeStatus());
-				
+				System.out.println("=====================================");
 			}
 		}
     	
@@ -393,24 +395,137 @@ public class Main {
 		}
 	}
     }
+    
+ // Crime information management System menu
+	
+ 	public static int crimeInformationMenuMainMenu() {
+ 		System.out.println("=====================================");
+ 		System.out.println("1. For Main Menu Option");
+ 		System.out.println("2. List All The Police Station In Our Area");
+ 		System.out.println("3. For Registering The Case");
+ 		System.out.println("4. For Registering The Criminal");
+ 		System.out.println("5. List All The Criminals");
+ 		System.out.println("6. See Number OF Solved And Unsolved Case");
+ 		System.out.println("7. See Number of Solved And Unsolved Case Current Month");
+ 		System.out.println("8. Updating The Crime Status");
+ 		System.out.println("9. Displaying The Crime PoliceStation Wise");
+ 		System.out.println("10. Printing the Criminals PoliceStation Wise");
+ 		System.out.println("11. For Quiting The Application");
+ 		System.out.println("=====================================");
+ 		int userChoise = sc.nextInt();
+ 		return userChoise;
+ 		
+ 	}
+    
+    // switch case section 
+    
+    public static void swichCaseSection() {
+    	
+    	System.out.println("Welcome in Crime Infomation Management System");
+    	System.out.println("Login required for the access the database");
+    	
+    	boolean endingTheLoop = false;
+    	
+    	while(!endingTheLoop) {
+    		
+    		if(takeInputFromUserForLogin()) {
+    			
+    					
+    			boolean quit = false;
+    	    	
+    	    	while(!quit) {
+    	    		
+//    	    		System.out.println("Please enter choice");
+    	    		int userChoice = crimeInformationMenuMainMenu();
+    	    		
+    	    		switch (userChoice) {
+    	    		
+    				case 1: {
+    					
+    					 userChoice = crimeInformationMenuMainMenu();
+    					 
+    				}case 2:{
+    					
+    					listingAllThePoliceStation();
+    					break;
+    					
+    				}case 3:{
+    					
+    					takeInputFromUserForRegisteringTheCase();
+    					break;
+    				
+    				}case 4:{
+    					
+    					takeInputFromUserForRegisteringCriminal();
+    					break;
+    					
+    				}case 5:{
+    					
+    					listAllCriminals();
+    					break;
+    					
+    				}case 6:{
+    					
+    					takeInputFromUserFornumberOfSolvedAndUnsolvedCrime();
+    					break;
+    					
+    				}case 7:{
+    					
+    					printAllTheSolvedAndUnsolvedCrimeInformationCurrentMonth();
+    					break;
+    					
+    				}case 8:{
+    					
+    					takeInputFromUserForUpdatingTheCrimeStatus();
+    					break;
+    					
+    				}case 9:{
+    					
+    					printingTheCrimeInformationPoliceStationWise();
+    					break;
+    				}case 10:{
+    					
+    					printingTheCriminalPoliceStationWise();
+    					break;
+    					
+    				}case 11:{
+    					
+    					System.out.println("You Quit The Appliction. Thank You !");
+    					quit = true;
+    					endingTheLoop = true;
+    					break;
+    				}
+    				
+    				default:
+    					throw new IllegalArgumentException("Unexpected value: " + userChoice);
+    				}
+    	    	}
+    	    	
+    		}else {
+    			
+    			System.out.println("Please try again");
+    			System.out.println("1. Login again");
+    			System.out.println("2. Quit the application");
+    			
+    			int userChoice2 = sc.nextInt();
+    			
+    			if(userChoice2 == 2) {
+    				System.out.println("You Quit The Appliction. Thank You !");
+    				endingTheLoop = true;
+    			}
+    		}
+    	}
+		
+    	
+    }
 
    
 
 
 	public static void main(String[] args) {
 		
-		System.out.println("Welcome in Crime Infomation Management System");
+		swichCaseSection();
 		
-//		takeInputFromUserForLogin();
-//		listingAllThePoliceStation();
-//		takeInputFromUserForRegisteringTheCase();
-//		takeInputFromUserForRegisteringCriminal();
-//		listAllCriminals();
-//		takeInputFromUserFornumberOfSolvedAndUnsolvedCrime();
-//		printAllTheSolvedAndUnsolvedCrimeInformationCurrentMonth();
-//		takeInputFromUserForUpdatingTheCrimeStatus();
-//		printingTheCrimeInformationPoliceStationWise();
-		printingTheCriminalPoliceStationWise();
 	}
 
 }
