@@ -1,0 +1,83 @@
+**Table of Police Stations
+
+create table policeStation(
+
+policeStationNo int primary key,
+policeStationArea varchar(20),
+policeStationAddress varchar(50)
+
+);
+
+
+** Values in table Police Stations
+
+insert into policeStation values(
+
+1002,
+'Sub police Stations',
+'Near Shivaji Park'
+);
+
+
+**Table of Crime Information
+
+create table crimeInformation(
+
+crimeId int primary key,
+crimeDate date,
+crimeDescription varchar(200),
+crimeVictims varchar(200),
+crimeDetailsDescription varchar(1000),
+crimeMainSuspecte varchar(100),
+crimeUnderWhichPoliceStationId int,
+foreign key(crimeUnderWhichPoliceStationId) references policeStation(policeStationNo)
+
+);
+
+// commented part
+foreign key(crimeId) references policeStation(policeStationNo)
+solved status code - 400
+unsolved status code - 500 
+alter table crimeInformation add crimeStatus SET DEFAULT 500;
+
+**Table of criminal List
+
+create table criminalList(
+
+criminalId int primary key,
+criminalName varchar(20),
+criminalAge date,
+criminalFaceMarks varchar(30),
+criminalFirstArrestLocation varchar(30),
+criminalCrimeId int,
+criminalGender varchar(5)
+foreign key(criminalCrimeId) references crimeInformation(crimeId)
+
+);
+
+
+
+
+
+
+
+select crimeinformation.crimeUnderWhichPoliceStationId from crimeinformation inner join criminallist on crimeinformation.crimeId = criminallist.criminalCrimeId;
+
+select * from crimeinformation inner join criminallist on crimeinformation.crimeId = criminallist.criminalCrimeId;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
