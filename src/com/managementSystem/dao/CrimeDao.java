@@ -1,15 +1,17 @@
 package com.managementSystem.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.managementSystem.bean.CrimeInformationBean;
 import com.managementSystem.bean.CriminalBean;
 import com.managementSystem.bean.PoliceOfficerBean;
 import com.managementSystem.bean.PoliceStationBean;
+import com.managementSystem.exception.MySqlExceptions;
 
 public interface CrimeDao {
 	
-	public PoliceOfficerBean loginPolicOfficer(String username, String password, String officerName, int officerId);
+	public PoliceOfficerBean loginPolicOfficer(String username, String password, String officerName, int officerId) throws MySqlExceptions, SQLException;
 	
 	public List<PoliceStationBean> listAllThePoliceStation();
 	

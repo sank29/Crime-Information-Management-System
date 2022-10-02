@@ -3,6 +3,7 @@ package com.managementSystem.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import com.managementSystem.utility.DataBaseUtility;
 public class CrimeImp implements CrimeDao {
 
 	@Override
-	public PoliceOfficerBean loginPolicOfficer(String username, String password, String officerName, int officerId) {
+	public PoliceOfficerBean loginPolicOfficer(String username, String password, String officerName, int officerId) throws MySqlExceptions, SQLException {
 		
 		PoliceOfficerBean policeOfficerBean = null;
 		
@@ -40,7 +41,7 @@ public class CrimeImp implements CrimeDao {
 				throw new MySqlExceptions("Username or Password incorrect");
 			}
 	
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			System.out.println(e.getMessage());
 		}
 		

@@ -1,11 +1,13 @@
 package com.managementSystem.mainApplication;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 import com.managementSystem.bean.CrimeInformationBean;
 import com.managementSystem.bean.CriminalBean;
 import com.managementSystem.bean.PoliceStationBean;
+import com.managementSystem.exception.MySqlExceptions;
 import com.managementSystem.usecases.CriminalRegisteringCase;
 import com.managementSystem.usecases.DisplayAllCriminalRecordPoliceStaionWiseCase;
 import com.managementSystem.usecases.DisplayAllCriminalsPoliceStationWise;
@@ -27,7 +29,7 @@ public class Main {
 	
 	// Input taking section
 	
-	public static boolean takeInputFromUserForLogin() {
+	public static boolean takeInputFromUserForLogin() throws MySqlExceptions, SQLException {
 		
 		System.out.println("Please enter username");
 		String username = sc.next();
@@ -109,6 +111,7 @@ public class Main {
 
 	
 	public static List<CrimeInformationBean> takeInputFromUserFornumberOfSolvedAndUnsolvedCrime(){
+		
 		System.out.println("1. For solved crime");
 		System.out.println("2. For unsolved crime");
 		
@@ -152,7 +155,7 @@ public class Main {
 	
 	// Calling the method section
 	
-	public static boolean loginValidation(String username, String password,String officerName,int officerId) {
+	public static boolean loginValidation(String username, String password,String officerName,int officerId) throws MySqlExceptions, SQLException {
 		
 		LoginPoliceOfficerCase loginPoliceOfficerCase = new LoginPoliceOfficerCase();
 		return loginPoliceOfficerCase.loginPoliceOfficer(username, password, officerName, officerId);
@@ -419,7 +422,7 @@ public class Main {
     
     // switch case section 
     
-    public static void swichCaseSection() {
+    public static void swichCaseSection()  {
     	
     	System.out.println("Welcome in Crime Infomation Management System");
     	System.out.println("Login required for the access the database");
@@ -428,92 +431,98 @@ public class Main {
     	
     	while(!endingTheLoop) {
     		
-    		if(takeInputFromUserForLogin()) {
-    			
-    					
-    			boolean quit = false;
-    	    	
-    	    	while(!quit) {
-    	    		
-//    	    		System.out.println("Please enter choice");
-    	    		int userChoice = crimeInformationMenuMainMenu();
-    	    		
-    	    		switch (userChoice) {
-    	    		
-    				case 1: {
-    					
-    					 userChoice = crimeInformationMenuMainMenu();
-    					 
-    				}case 2:{
-    					
-    					listingAllThePoliceStation();
-    					break;
-    					
-    				}case 3:{
-    					
-    					takeInputFromUserForRegisteringTheCase();
-    					break;
-    				
-    				}case 4:{
-    					
-    					takeInputFromUserForRegisteringCriminal();
-    					break;
-    					
-    				}case 5:{
-    					
-    					listAllCriminals();
-    					break;
-    					
-    				}case 6:{
-    					
-    					takeInputFromUserFornumberOfSolvedAndUnsolvedCrime();
-    					break;
-    					
-    				}case 7:{
-    					
-    					printAllTheSolvedAndUnsolvedCrimeInformationCurrentMonth();
-    					break;
-    					
-    				}case 8:{
-    					
-    					takeInputFromUserForUpdatingTheCrimeStatus();
-    					break;
-    					
-    				}case 9:{
-    					
-    					printingTheCrimeInformationPoliceStationWise();
-    					break;
-    				}case 10:{
-    					
-    					printingTheCriminalPoliceStationWise();
-    					break;
-    					
-    				}case 11:{
-    					
-    					System.out.println("You Quit The Appliction. Thank You !");
-    					quit = true;
-    					endingTheLoop = true;
-    					break;
-    				}
-    				
-    				default:
-    					throw new IllegalArgumentException("Unexpected value: " + userChoice);
-    				}
-    	    	}
-    	    	
-    		}else {
-    			
-    			System.out.println("Please try again");
-    			System.out.println("1. Login again");
-    			System.out.println("2. Quit the application");
-    			
-    			int userChoice2 = sc.nextInt();
-    			
-    			if(userChoice2 == 2) {
-    				System.out.println("You Quit The Appliction. Thank You !");
-    				endingTheLoop = true;
-    			}
-    		}
+    		try {
+				if(takeInputFromUserForLogin()) {
+					
+							
+					boolean quit = false;
+					
+					while(!quit) {
+						int userChoice = crimeInformationMenuMainMenu();
+						
+						switch (userChoice) {
+						
+						case 1: {
+							
+							 userChoice = crimeInformationMenuMainMenu();
+							 
+						}case 2:{
+							
+							listingAllThePoliceStation();
+							break;
+							
+						}case 3:{
+							
+							takeInputFromUserForRegisteringTheCase();
+							break;
+						
+						}case 4:{
+							
+							takeInputFromUserForRegisteringCriminal();
+							break;
+							
+						}case 5:{
+							
+							listAllCriminals();
+							break;
+							
+						}case 6:{
+							
+							takeInputFromUserFornumberOfSolvedAndUnsolvedCrime();
+							break;
+							
+						}case 7:{
+							
+							printAllTheSolvedAndUnsolvedCrimeInformationCurrentMonth();
+							break;
+							
+						}case 8:{
+							
+							takeInputFromUserForUpdatingTheCrimeStatus();
+							break;
+							
+						}case 9:{
+							
+							printingTheCrimeInformationPoliceStationWise();
+							break;
+						}case 10:{
+							
+							printingTheCriminalPoliceStationWise();
+							break;
+							
+						}case 11:{
+							
+							System.out.println("You Quit The Appliction. Thank You !");
+							quit = true;
+							endingTheLoop = true;
+							break;
+							
+						}
+						
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + userChoice);
+						}
+					}
+					
+				}else {
+					
+					System.out.println("Please try again");
+					System.out.println("1. Login again");
+					System.out.println("2. Quit the application");
+					
+					int userChoice2 = sc.nextInt();
+					
+					if(userChoice2 == 2) {
+						System.out.println("You Quit The Appliction. Thank You !");
+						endingTheLoop = true;
+					}
+				}
+			} catch (MySqlExceptions e) {
+				System.out.println(e.getMessage());
+			}catch (SQLException e) {
+				// TODO: handle exception
+				System.out.println(e.getMessage());
+			}
     	}
 		
     	
