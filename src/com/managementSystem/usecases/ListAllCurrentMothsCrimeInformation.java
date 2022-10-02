@@ -1,0 +1,25 @@
+package com.managementSystem.usecases;
+
+import java.util.List;
+
+import com.managementSystem.bean.CrimeInformationBean;
+import com.managementSystem.dao.CrimeImp;
+
+public class ListAllCurrentMothsCrimeInformation {
+	
+public List<CrimeInformationBean> listAllCrimeInformation(){
+		
+		CrimeImp crimeImp = new CrimeImp();
+		
+		List<CrimeInformationBean>crimeInformationBean = crimeImp.numberOfCrimeInformationBasedOnMonth();
+		
+		if(crimeInformationBean.isEmpty()) {
+			
+			return null;
+		}else {
+			
+			return crimeInformationBean;
+			
+		}
+	}
+}

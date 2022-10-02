@@ -1,19 +1,5 @@
 package com.managementSystem.bean;
 
-
-//create table criminalList(
-//
-//criminalId int primary key,
-//criminalName varchar(20),
-//criminalAgeAndGender date,
-//criminalFaceMarks varchar(30),
-//criminalFirstArrestLocation varchar(30),
-//criminalCrimeId int,
-//foreign key(criminalCrimeId) references crimeInformation(crimeId)
-//);
-
-
-
 public class CriminalBean {
 	
 	private int criminalId;
@@ -37,7 +23,7 @@ public class CriminalBean {
 		
 	}
 
-	public String getCriminalAge() {
+    public String getCriminalAge() {
 		return criminalAge;
 	}
 

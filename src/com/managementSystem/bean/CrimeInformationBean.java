@@ -9,9 +9,10 @@ public class CrimeInformationBean {
 	private String crimeDetailsDescription;
 	private String crimeMainSuspect;
 	private int crimeUnderWhichPoliceStationId;
+	private int crimeStatus;
 	
 	public CrimeInformationBean(int crimeId, String date, String crimeDescription, String crimeVictims,
-			String crimeDetailsDescription, String crimeMainSuspect, int crimeUnderWhichPoliceStationId) {
+			String crimeDetailsDescription, String crimeMainSuspect, int crimeUnderWhichPoliceStationId, int crimeStatus) {
 		
 		this.crimeId = crimeId;
 		this.date = date;
@@ -20,8 +21,22 @@ public class CrimeInformationBean {
 		this.crimeDetailsDescription = crimeDetailsDescription;
 		this.crimeMainSuspect = crimeMainSuspect;
 		this.crimeUnderWhichPoliceStationId = crimeUnderWhichPoliceStationId;
-		
+		this.crimeStatus = crimeStatus;
 	}
+	
+	
+
+	public int getCrimeStatus() {
+		return crimeStatus;
+	}
+
+
+
+	public void setCrimeStatus(int crimeStatus) {
+		this.crimeStatus = crimeStatus;
+	}
+
+
 
 	public int getCrimeId() {
 		return crimeId;
