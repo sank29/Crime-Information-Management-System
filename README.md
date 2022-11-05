@@ -90,7 +90,7 @@ foreign key(criminalCrimeId) references crimeInformation(crimeId)
 
 3) Add mysql connector jar file in application build path.
 
-4) For accessing the database as admin use Username:"admin" and Password:"admin"
+4) For accessing the database as admin use Username: "admin" and Password: "admin"
 
 ### Application snaps:
 
