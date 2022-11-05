@@ -88,6 +88,8 @@ foreign key(criminalCrimeId) references crimeInformation(crimeId)
 
 );
 
+3) Add mysql connector jar file in application build path.
+
 ### Application snaps:
 
 ![login in crime database](https://user-images.githubusercontent.com/76080960/200118556-8cbd6f07-28e3-42bf-9c91-1c3005bd752f.png)
