@@ -8,7 +8,7 @@ Java , MySql
 
 ## Things before running the application
 
-If you want to run this java application in your system then you need to take care of some things before runing in your system. 
+If you want to run this java application in your system then you need to take care of some things before running in your system. 
 
 1) You need mySql install in your system.
 
